@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: black;"
+
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Catalogo anime</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="animu">Animes <img src="./img/b.png" /></a>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2 a" type="search" placeholder="pesquisar" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 anime" type="submit">Ir</button>
+        </form>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <div class="alfabeto">
+                <button onclick="getImages(0)" class="button">Shonen</button>
+                <button onclick="getImages(3)" class="button">isekai</button>
+                <button onclick="getImages(6)" class="button">shojo</button>
+            </div>
+
+            <div class="pesquisa">
+                <input type="text" name="pesquisar" placeholder="pesquisar por genero" />
+                <div class="filtro">
+                    
+                    <button class="filtroBtn">filtro</button>
+                    <button class="idioma">Idiomas</button>
+                    <button class="ordem">Ordenar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+                <img id="image" class="card-img-top" src="" alt="Card image cap">
+                <div class="card-body">
+                    <h5 id="title" class="card-title"></h5>
+                    <p id="descricao" class="card-text"></p>
+                </div>
+            </div>
+            <div class="card">
+                <img id="image1" class="card-img-top" src="" alt="Card image cap">
+                <div class="card-body">
+                    <h5 id="title1" class="card-title"></h5>
+                    <p id="descricao1" class="card-text"></p>
+                </div>
+            </div>
+            <div class="card">
+                <img id="image2" class="card-img-top" src="" alt="Card image cap">
+                <div class="card-body">
+                    <h5 id="title2" class="card-title"></h5>
+                    <p id="descricao2" class="card-text"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="rodape">
+        <h2>Desenvolvido por Arthur Porto. 2021</br>
+            Todas as informações foram tiras de uma API.</h2>
+
+    </footer>
+
+    <script>
+        function getImages(index){
+            fetch('https://kitsu.io/api/edge/anime')
+            .then(data => data.json())
+            .then(response => {
+                const data = response.data
+                let title = document.getElementById('title')
+                let descricao = document.getElementById('descricao')
+                let image = document.getElementById('image')
+
+                title.innerText = data[index].attributes.titles.ja_jp
+                descricao.innerText = data[index].attributes.description
+                image.src = data[index].attributes.posterImage.original
+
+                let title1 = document.getElementById('title1')
+                let descricao1 = document.getElementById('descricao1')
+                let image1 = document.getElementById('image1')
+
+                title1.innerText = data[index+1].attributes.titles.en_jp
+                descricao1.innerText = data[index+1].attributes.description
+                image1.src = data[index+1].attributes.posterImage.original
+
+                let title2 = document.getElementById('title2')
+                let descricao2 = document.getElementById('descricao2')
+                let image2 = document.getElementById('image2')
+
+                title2.innerText = data[index+2].attributes.titles.en_jp
+                descricao2.innerText = data[index+2].attributes.description
+                image2.src = data[index+2].attributes.posterImage.original
+            })
+        }
+
+        
+getImages(0);
+    </script>
+</body>
+
+</html>
